@@ -1,3 +1,3 @@
-BASE_URL = 'https://db4f7883-7576-4399-95e1-9984ad9a98ac.serverhub.praktikum-services.ru'
+BASE_URL = 'https://3ce498f6-f290-4697-8d74-f4154963c22b.serverhub.praktikum-services.ru'
 CREATE_ORDER_PATH = "/api/v1/orders"
 GET_ORDER_PATH = "/api/v1/orders/track"

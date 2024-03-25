@@ -1,85 +1,13 @@
-# Задание 1
+### Задания 1 и 2
+Sql-команды для заданий 1 и 2 расположены в папке sql_task с названиями task_1.sql и task_2.sql соответственно
 
-Создала 2 заказа:
-```
-curl --location 'https://db4f7883-7576-4399-95e1-9984ad9a98ac.serverhub.praktikum-services.ru/api/v1/orders' \
---header 'Content-Type: application/json' \
---data '{
-    "firstName": "Naruto",
-    "lastName": "Uchiha",
-    "address": "Konoha, 142 apt.",
-    "metroStation": 4,
-    "phone": "+7 800 355 35 35",
-    "rentTime": 5,
-    "deliveryDate": "2020-06-06",
-    "comment": "Saske, come back to Konoha",
-    "color": [
-        "BLACK"
-    ]
-}'
-```
-```commandline
-curl --location 'https://db4f7883-7576-4399-95e1-9984ad9a98ac.serverhub.praktikum-services.ru/api/v1/orders' \
---header 'Content-Type: application/json' \
---data '{
-    "firstName": "Saske",
-    "lastName": "Uzumaki",
-    "address": "Konoha, 142 apt.",
-    "metroStation": 2,
-    "phone": "+7 800 355 35 55",
-    "rentTime": 5,
-    "deliveryDate": "2020-06-06",
-    "comment": "Saske, come back to Konoha",
-    "color": [
-        "WHITE"
-    ]
-}'
-```
-создала 2 курьера
-````
-curl --location 'https://db4f7883-7576-4399-95e1-9984ad9a98ac.serverhub.praktikum-services.ru/api/v1/courier' \
---header 'Content-Type: application/json' \
---data '{
-    "login": "shinobi",
-    "password": "1234",
-    "firstName": "naruto"
-}'
-````
-````
-curl --location 'https://db4f7883-7576-4399-95e1-9984ad9a98ac.serverhub.praktikum-services.ru/api/v1/courier' \
---header 'Content-Type: application/json' \
---data '{
-    "login": "ninja",
-    "password": "1234",
-    "firstName": "saske"
-}'
-````
-приняла заказы
-````
-curl --location --request PUT 'https://db4f7883-7576-4399-95e1-9984ad9a98ac.serverhub.praktikum-services.ru/api/v1/orders/accept/5?courierId=3'
-curl --location --request PUT 'https://db4f7883-7576-4399-95e1-9984ad9a98ac.serverhub.praktikum-services.ru/api/v1/orders/accept/6?courierId=4'
-````
-запрос на проверку
-````
-select c.login, COUNT(o."courierId") 
-from "Couriers" c 
-left join "Orders" as o 
-on c.id = o."courierId" 
-where o."inDelivery" = true 
-group by c.login;
-````
-
-p.s Определила, что при привязке курьера к заказу создается дубль заказа
-
-# Задание 2
-запрос на проверку статусов
-````
-select track,
-case
-when o.finished = true then 2
-when o.cancelled = true then -1
-when o."inDelivery" = true then 1
-else 0
-end status
-from "Orders" o;
-````
+### Запуск автотестов
+1. Склонировать репозиторий
+2. В файле configuration.py поменять адрес сервера в константе BASE_URL, после генерации
+3. Установить python 3, если не установлен
+4. Выполнить команду `python -m venv venv`
+5. Выполнить команду `venv\Scripts\activate.bat`
+6. Установить локально пакет request командой `pip install requests`
+7. Установить локально пакет pytest командой `pip install pytest`
+8. Запустить файл order_test.py командой `pytest .\order_test.py`
+9. Должен получиться результат как на скриншоте result.png
